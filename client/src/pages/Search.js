@@ -1,24 +1,42 @@
 import React, { Component } from "react";
-import { Col, Row, Container } from  "../components/Grid";
-import Jumbotron from "../components/Jumbotron";
+import { Container, Row, Col, Jumbotron } from "react-bootstrap"
+
+import SearchForm from "../components/SearchForm/SearchForm";
+import API from "../utils/API";
 
 export default class Search extends Component {
     state = {
-        something: []
+        search: "",
+        books: [],
+        results: [],
+        error: ""
     };
+
+    handleFormSubmit = event => {
+       event.preventDefault();
+       API.getBook(this.state.search)
+         .then(res => {
+            if (res.data.status === "error") {
+               throw new Error(res.data.message);
+            }
+            this.setState({ results: res.data.message, error: ""});
+         })
+    }
 
     render() {
         return (
-            <Component fluid>
+            <Container fluid>
                 <Row>
                     <Col>
                         <Jumbotron>
-                            <h1>Header 1</h1>
+                            <h1>Search 1</h1>
                         </Jumbotron>
-                        
+                        <SearchForm>
+                           handleFormSubmit={this.handleFormSubmit}
+                        </SearchForm>
                     </Col>
                 </Row>
-            </Component>
+            </Container>
         );
     }
 
