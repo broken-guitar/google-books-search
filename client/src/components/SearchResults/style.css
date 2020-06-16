@@ -1,0 +1,22 @@
+.search-results-container {
+   min-width: 300px;
+}
+
+p.book-description {
+   /* overflow: auto; */
+   /* max-height: 3.6em; */
+   /* width: 250px; */
+  /* white-space: nowrap; */
+ 
+  /* text-overflow: ellipsis; */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;  
+
+}
+
+.btn-grp {
+   z-index: 2;
+   position: relative;
+}

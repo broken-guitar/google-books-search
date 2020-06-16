@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Navbar } from "react-bootstrap";
-
+import { Container, Row, Col } from "react-bootstrap";
+import BooksNavbar from "./components/BooksNavbar";
+import "./App.css"
 
 // import Books from "./pages/Books";
 // import Nav from "./components/Nav";
@@ -14,11 +15,17 @@ function App() {
   return (
    
         <Router>
-            <div>
-                <Navbar />
-                <Route path="/" exact component={Saved} />
-                <Route path="/saved" exact component={Saved} />
-                <Route path="/search" exact component={Search} />
+            <div className="body-div">
+                <BooksNavbar />
+                <Container>
+                  <Row>
+                     <Col >
+                     <Route path="/" exact component={Saved} />
+                     <Route path="/saved" exact component={Saved} />
+                     <Route path="/search" exact component={Search} />
+                     </Col>
+                  </Row>
+                </Container>
             </div>
         </Router>
   );

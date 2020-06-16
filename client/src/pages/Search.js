@@ -9,7 +9,7 @@ class Search extends Component {
     state = {
         search: "",
         books: [],
-        results: [],
+        searchResults: [],
         error: ""
     };
 
@@ -25,28 +25,43 @@ class Search extends Component {
             if (res.data.status === "error") {
                throw new Error(res.data.message);
             }
-            console.log("books response: ", res.data);
-            // this.setState({ results: res.data.message, error: ""});
+            console.log("books response: ", res.data.items);
+            this.setState({ searchResults: res.data.items, error: "", search: ""});
          })
+    }
+
+    handleSaveBook = event => {
+       event.preventDefault();
+
     }
 
     render() {
         return (
-            <Container fluid>
-                <Row>
-                    <Col>
-                        <Jumbotron>
-                            <h1>Search 1</h1>
-                        </Jumbotron>
-                        <SearchForm
-                            books={this.state.books}
-                            handleInputChange={this.handleInputChange}
-                            handleFormSubmit={this.handleFormSubmit}
-                        />
-                        <SearchResults results={this.state.results} />
-                    </Col>
-                </Row>
-            </Container>
+
+            <div>
+               
+           
+               <Container fluid>
+               <Jumbotron className="text-center">
+                  <h1>Google Books Search</h1>
+               </Jumbotron>
+                  <Row>
+                     <Col sm="12">                           
+                           <SearchForm
+                              search={this.state.search}
+                              books={this.state.books}
+                              handleInputChange={this.handleInputChange}
+                              handleFormSubmit={this.handleFormSubmit}
+                           />
+                           <br></br>
+                           
+                     </Col>
+                     <Col sm="12">
+                     <SearchResults results={this.state.searchResults} saveBtnClick={this.handleSaveBook}/>
+                     </Col>
+                  </Row>
+               </Container>
+            </div>
         );
     }
 
