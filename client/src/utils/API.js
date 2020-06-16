@@ -1,20 +1,29 @@
 import axios from "axios";
 
+
 export default {
-  // Gets all books
-  getBooks: function() {
+
+    
+  searchGoogleBooks: function(query) {
+    const BASEURL = "https://www.googleapis.com/books/v1/volumes";
+    const APIKEY = "AIzaSyDelCyGPERUd7VQLmWqucLtxHxFBmAD-Y8";
+    let apiUrl = BASEURL + "?q=" + query // + "&key=" + APIKEY 
+    return axios.get(apiUrl)      
+  },  
+  // return all saved books
+  getSavedBooks: function() {
     return axios.get("/api/books");
   },
-  // Gets the book with the given id
-  getBook: function(id) {
-    return axios.get("/api/books/" + id);
+  // save a book to the database
+  saveBook: function(id) {
+    return axios.post("/api/books/" + id);
   },
-  // Deletes the book with the given id
-  deleteBook: function(id) {
+  // delete a book from the database by Mongo _id
+  deleteSavedBook: function(id) {
     return axios.delete("/api/books/" + id);
   },
-  // Saves a book to the database
-  saveBook: function(bookData) {
-    return axios.post("/api/books", bookData);
+  // will load single HTML page in client/build/index.html
+  default: function(bookData) {
+    return axios.post("*", bookData);
   }
 };

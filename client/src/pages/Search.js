@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { Container, Row, Col, Jumbotron } from "react-bootstrap"
 
 import SearchForm from "../components/SearchForm/SearchForm";
+import SearchResults from "../components/SearchResults/SearchResults";
 import API from "../utils/API";
 
-export default class Search extends Component {
+class Search extends Component {
     state = {
         search: "",
         books: [],
@@ -12,14 +13,20 @@ export default class Search extends Component {
         error: ""
     };
 
+    handleInputChange = event => {
+        this.setState({ search: event.target.value });
+    }
+
+    // search for book with Google Books API
     handleFormSubmit = event => {
        event.preventDefault();
-       API.getBook(this.state.search)
+       API.searchGoogleBooks(this.state.search)
          .then(res => {
             if (res.data.status === "error") {
                throw new Error(res.data.message);
             }
-            this.setState({ results: res.data.message, error: ""});
+            console.log("books response: ", res.data);
+            // this.setState({ results: res.data.message, error: ""});
          })
     }
 
@@ -31,9 +38,12 @@ export default class Search extends Component {
                         <Jumbotron>
                             <h1>Search 1</h1>
                         </Jumbotron>
-                        <SearchForm>
-                           handleFormSubmit={this.handleFormSubmit}
-                        </SearchForm>
+                        <SearchForm
+                            books={this.state.books}
+                            handleInputChange={this.handleInputChange}
+                            handleFormSubmit={this.handleFormSubmit}
+                        />
+                        <SearchResults results={this.state.results} />
                     </Col>
                 </Row>
             </Container>
@@ -42,3 +52,4 @@ export default class Search extends Component {
 
 }
 
+export default Search;
