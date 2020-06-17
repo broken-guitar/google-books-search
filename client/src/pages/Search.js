@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container, Row, Col, Jumbotron } from "react-bootstrap"
 
 import SearchForm from "../components/SearchForm/SearchForm";
-import SearchResults from "../components/SearchResults/SearchResults";
+import SearchResults from "../components/BookList/BookList";
 import { API } from "../utils/clientAPI";
 
 class Search extends Component {
@@ -11,6 +11,18 @@ class Search extends Component {
         books: [],
         searchResults: [],
         error: ""
+    };
+
+    handleBookData = bookData => {
+        //   make a db book model object
+          let book = {
+              title:          bookData.volumeInfo.title,
+              authors:        bookData.volumeInfo.authors,
+              description:    bookData.volumeInfo.description,
+              image:          bookData.volumeInfo.imageLinks.thumbnail || "",
+              link:           bookData.volumeInfo.infoLink    
+          };
+          return book;
     };
 
     handleInputChange = event => {
@@ -25,14 +37,11 @@ class Search extends Component {
             if (res.data.status === "error") {
                throw new Error(res.data.message);
             }
-            console.log("books response: ", res.data.items);
-            this.setState({ searchResults: res.data.items, error: "", search: ""});
+            
+            let books = res.data.items.map(bookData => this.handleBookData(bookData));
+
+            this.setState({ searchResults: books, error: "", search: ""});
          })
-    }
-
-    handleSaveBook = event => {
-       event.preventDefault();
-
     }
 
     render() {
@@ -53,7 +62,7 @@ class Search extends Component {
                         <br></br>
                      </Col>
                      <Col sm="12">
-                        <SearchResults results={this.state.searchResults} />
+                        <SearchResults books={this.state.searchResults} />
                      </Col>
                   </Row>
                </Container>

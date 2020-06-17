@@ -1,14 +1,17 @@
 import React, {Component} from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-import BooksNavbar from "./components/BooksNavbar";
+
+import BooksNavbar from "./components/BooksNavbar/BooksNavbar";
+import Search from "./pages/Search";
+import Saved from "./pages/Saved";
+
 import "./App.css"
 
 // import Books from "./pages/Books";
 // import Nav from "./components/Nav";
 
-import Search from "./pages/Search";
-import Saved from "./pages/Saved";
+
 
 class App extends Component {
  
@@ -21,9 +24,9 @@ class App extends Component {
                      <Container>
                         <Row>
                            <Col >
-                           <Route path="/" exact component={Saved} />
-                           <Route path="/saved" exact component={Saved} />
-                           <Route path="/search" exact component={Search} />
+                              <Route exact path="/"        component={Saved} />
+                              <Route exact path="/saved"   component={Saved} />
+                              <Route exact path="/search"  component={Search} />
                            </Col>
                         </Row>
                      </Container>

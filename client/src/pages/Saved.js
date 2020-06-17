@@ -1,35 +1,51 @@
 import React, { Component } from "react";
-import Jumbotron from "../components/Jumbotron";
+import { Container, Row, Col, Jumbotron } from "react-bootstrap"
+
+import BookList from "../components/BookList/BookList";
 
 import { API } from "../utils/clientAPI";
 
-import { Col, Row, Container } from  "../components/Grid";
-import { List, ListItem } from "../components/List";
-import { Input, TextArea, FormBtn } from "../components/Form";
+export default class Saved extends Component { // <-- a way to export default when defining
+   state = {
+      savedBooks: []
 
-export default class Saved extends Component {
-//    constructor(props) {
-//         super(props);
-//         // don't call this.setState() here!
-//         this.state = { 
-//            something: []
-//         };
-//     //    this.handleClick = this.handleClick.bind(this)
-//    }
+   };
 
-//    componentDidMount() {
-//     // do something on load?
-//     }
+   componentDidMount() {
+      this.loadBooks();
+   };
 
-//     someMethod = () => {
-//     // method to do something, like button click, etc.
-//     };
+   loadBooks(e) {
+      API.getSavedBooks()
+         .then(res => {
+            this.setState({ savedBooks: res.data });
+         })
+         .catch(err => console.log(err));
+   };
 
-    render() {
+   render() {
         return (
-            <Container fluid>
-                
-            </Container>
+         <div>
+         <Container fluid>
+            <Jumbotron className="text-center">
+               <h1>Saved Books</h1>
+            </Jumbotron>
+            <Row>
+               {/* <Col sm="12">                           
+                  <SearchForm
+                     search={this.state.search}
+                     books={this.state.books}
+                     handleInputChange={this.handleInputChange}
+                     handleFormSubmit={this.handleFormSubmit}
+                  />
+                  <br></br>
+               </Col> */}
+               <Col sm="12">
+                  <BookList books={this.state.savedBooks} />
+               </Col>
+            </Row>
+         </Container>
+      </div>
 
         );
     }
