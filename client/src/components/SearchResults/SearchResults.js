@@ -1,20 +1,24 @@
-import React from "react";
+import React, { Component } from "react";
 import "./style.css";
 
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import { render } from "react-dom";
 
+// class  SearchResults extends Component {
+
 function SearchResults(props) {
-  
-   handleSaveBook = book => {
+   
+   const handleSaveBook = book => {
       console.log(book.volumeInfo.title);
    }
   
+   // render () {
    return (
       <div >
+          {/* {this.props.results.length ? ( */}
       {props.results.length ? (
          <ul className="list-group search-results">
-            {props.results.map(book => (
+            {props.results.map(book => ( // this.props...
                <li key={book.id} className="list-group-item">
                   {/* <Container className="search-results-container"> */}
                      <Row className="my-2">
@@ -28,7 +32,7 @@ function SearchResults(props) {
                         <Col xs="8" sm="10">
                         <div className="float-right btn-grp">
                            <Button variant="outline-success" className="save-btn mr-1"
-                              onClick={() => this.handleSaveBook(book)}
+                              onClick={() => handleSaveBook(book)}
                               >Save</Button>
                            <Button variant="outline-primary" className="save-btn"
                               href={book.volumeInfo.infoLink}
@@ -55,4 +59,5 @@ function SearchResults(props) {
       </div>
    );
 }
+// }
 export default SearchResults;
