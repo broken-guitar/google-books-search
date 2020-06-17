@@ -5,7 +5,10 @@ import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import { render } from "react-dom";
 
 function SearchResults(props) {
-   
+  
+   handleSaveBook = book => {
+      console.log(book.volumeInfo.title);
+   }
   
    return (
       <div >
@@ -25,7 +28,7 @@ function SearchResults(props) {
                         <Col xs="8" sm="10">
                         <div className="float-right btn-grp">
                            <Button variant="outline-success" className="save-btn mr-1"
-                              href="#"
+                              onClick={() => this.handleSaveBook(book)}
                               >Save</Button>
                            <Button variant="outline-primary" className="save-btn"
                               href={book.volumeInfo.infoLink}
