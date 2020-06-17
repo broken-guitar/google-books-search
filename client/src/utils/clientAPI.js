@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export default {
+export const API = {
 
     
   searchGoogleBooks: function(query) {
@@ -15,9 +15,8 @@ export default {
     return axios.get("/api/books");
   },
   // save a book to the database
-  saveBook: function(id) {
-    return axios.post("/api/books/" + id);
-  },
+  saveBook: (book) => axios.post("/api/books/", book),
+  
   // delete a book from the database by Mongo _id
   deleteSavedBook: function(id) {
     return axios.delete("/api/books/" + id);

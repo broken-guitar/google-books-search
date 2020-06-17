@@ -20,7 +20,8 @@ module.exports = {
   },
 
   // SAVE
-  create: function(req, res) {
+  save: function(req, res) {
+    console.log("req.body: ", req.body);
     db.Book
       .create(req.body)
       .then(dbModel => res.json(dbModel))

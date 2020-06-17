@@ -4,13 +4,27 @@ import "./style.css";
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import { render } from "react-dom";
 
+import { API } from "../../utils/clientAPI";
+
 // class  SearchResults extends Component {
 
 function SearchResults(props) {
    
-   const handleSaveBook = book => {
-      console.log(book.volumeInfo.title);
-   }
+    const handleSaveBook = book => {
+        console.log(book.volumeInfo.title);
+
+        let bookDoc = {
+            title:          book.volumeInfo.title,
+            authors:        book.volumeInfo.authors,
+            description:    book.volumeInfo.description,
+            image:          book.volumeInfo.imageLinks.thumbnail,
+            link:           book.volumeInfo.infoLink    
+        };
+
+    API.saveBook(bookDoc)
+        .then  (res  =>  console.log(res))
+        .catch (err  =>  console.log(err))
+    };
   
    // render () {
    return (

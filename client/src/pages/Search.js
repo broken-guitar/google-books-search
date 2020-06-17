@@ -3,7 +3,7 @@ import { Container, Row, Col, Jumbotron } from "react-bootstrap"
 
 import SearchForm from "../components/SearchForm/SearchForm";
 import SearchResults from "../components/SearchResults/SearchResults";
-import API from "../utils/API";
+import { API } from "../utils/clientAPI";
 
 class Search extends Component {
     state = {
