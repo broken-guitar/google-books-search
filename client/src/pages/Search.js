@@ -69,18 +69,20 @@ class Search extends Component {
                      <h1>Google Books Search</h1>
                   </Jumbotron>
                   <Row>
+                     
                      <Col sm="12">                           
                         <SearchForm
-                           search={this.state.search}
-                           handleInputChange={this.handleInputChange}
-                           handleFormSubmit={this.handleFormSubmit}
+                           search               = {this.state.search}
+                           handleInputChange    = {this.handleInputChange}
+                           handleFormSubmit     = {this.handleFormSubmit}
                         />
                         <br></br>
                      </Col>
+                     
                      <Col sm="12">
                         <BookList
-                            updateSearchResults={this.updateSearchResults}
-                            books={this.state.searchResults}
+                            books               = {this.state.searchResults}
+                            updateSearchResults = {this.updateSearchResults}
                         />
                      </Col>
                   </Row>

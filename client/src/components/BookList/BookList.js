@@ -4,7 +4,7 @@ import "./style.css";
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import { render } from "react-dom";
 
-import ReactCSSTransitionGroup from 'react-transition-group'; // ES6
+import FlipMove from "react-flip-move";
 
 import { API } from "../../utils/clientAPI";
 
@@ -40,61 +40,63 @@ function BookList(props) {
     };
     
 
-   // render () {
    return (
       
       <div >
+      
       {props.books.length ? (
+         
          <ul className="list-group search-results">
-
+            <FlipMove>
             {props.books.map(book => ( 
+                <li key={book._id ? book._id : book.id} className="list-group-item">
+                    
+                        <Row className="my-2">
+                            
+                            <Col xs="4" sm="2">
+                                <Image src={book.image}/>
+                            </Col>
+                            
+                            <Col xs="8" sm="10">
+                            {/* group buttons in div to float group but control spacing between buttons*/}
+                            <div className="float-right btn-grp">
+                                {/*   render Save or Remove (book) button depending on existence of db id
+                                        to indicate whether book has been saved or not */}
+                                {!book._id || book.saved
+                                    ?  <Button
+                                        variant={book.saved ? "success" : "outline-success"} className="save-btn mr-1"
+                                        onClick={() => handleSaveBook(book)}
+                                        >
+                                        {book.saved ? "Saved" : "Save"}
+                                        </Button>
+                                    :  <Button
+                                        variant="outline-danger" className="save-btn mr-1"
+                                        onClick={() => handleRemoveBook(book._id)}
+                                        >Remove</Button>
+                                }     
+                                <Button variant="outline-primary" className="save-btn"
+                                    href={book.link}
+                                    >View</Button>
+                            </div>
+                            
+                                <h3>{book.title}</h3>
+                                {/* {book.description
+                                    ? <h5 className="font-italic">{book.volumeInfo.subtitle}</h5>
+                                    : ""} */}
+                                <p>Author(s): {book.authors.join(", ")}</p>
+                                <p className="book-description">{book.description}</p>
+                            </Col>
 
-               <li key={book._id ? book._id : book.id} className="list-group-item">
-                
-                     <Row className="my-2">
-                        
-                        <Col xs="4" sm="2">
-                            <Image src={book.image}/>
-                        </Col>
-                        
-                        <Col xs="8" sm="10">
-                           {/* group buttons in div to float group but control spacing between buttons*/}
-                           <div className="float-right btn-grp">
-                              {/*   render Save or Remove (book) button depending on existence of db id
-                                    to indicate whether book has been saved or not */}
-                              {!book._id || book.saved
-                                 ?  <Button
-                                       variant={book.saved ? "success" : "outline-success"} className="save-btn mr-1"
-                                       onClick={() => handleSaveBook(book)}
-                                    >
-                                    {book.saved ? "Saved" : "Save"}
-                                    </Button>
-                                 :  <Button
-                                       variant="outline-danger" className="save-btn mr-1"
-                                       onClick={() => handleRemoveBook(book._id)}
-                                    >Remove</Button>
-                              }     
-                              <Button variant="outline-primary" className="save-btn"
-                                 href={book.link}
-                                 >View</Button>
-                           </div>
-                           
-                              <h3>{book.title}</h3>
-                              {/* {book.description
-                                 ? <h5 className="font-italic">{book.volumeInfo.subtitle}</h5>
-                                 : ""} */}
-                              <p>Author(s): {book.authors.join(", ")}</p>
-                              <p className="book-description">{book.description}</p>
-                        </Col>
+                        </Row>
+                    
+                </li>
 
-                     </Row>
-                  {/* </Container> */}
-               </li>
             ))}
+            </FlipMove>
          </ul>
       )
       :
-         (<h3 className="ml-3"> No books found :(</h3>
+         (<h3 className="ml-3 leads"> No Results </h3>
       )}
       </div>
    );
