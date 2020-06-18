@@ -6,7 +6,7 @@ module.exports = {
   findAll: function(req, res) {
     db.Book
       .find(req.query)
-      .sort({ date: -1 })
+      .sort({ createdAt: "desc" })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -28,13 +28,13 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
 
-  // UPDATE
-  update: function(req, res) {
-    db.Book
-      .findOneAndUpdate({ _id: req.params.id }, req.body)
-      .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
-  },
+//   // UPDATE
+//   update: function(req, res) {
+//     db.Book
+//       .findOneAndUpdate({ _id: req.params.id }, req.body)
+//       .then(dbModel => res.json(dbModel))
+//       .catch(err => res.status(422).json(err));
+//   },
 
   // DELETE
   remove: function(req, res) {

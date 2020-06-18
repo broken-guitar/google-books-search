@@ -4,15 +4,15 @@ import { Navbar, Nav } from "react-bootstrap";
 
 function BooksNavbar() {
 
-   let navEventKey = "saved";
+//    let navEventKey = "saved";
    
-   const handleNavSelect = eventKey => {
-      console.log("active nav: ", eventKey)
-      eventKey = eventKey;
-   };
+//    const handleNavSelect = eventKey => {
+//       console.log("active nav: ", eventKey)
+//       eventKey = eventKey;
+//    };
 
    return (
-      <Navbar expand="lg" bg="secondary" variant="dark" activeKey={navEventKey} onSelect={handleNavSelect}>
+      <Navbar expand="sm" bg="secondary" variant="dark">
          <Navbar.Brand href="#home">Google Books Search</Navbar.Brand>
          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
          <Navbar.Collapse id="responsive-navbar-nav">
