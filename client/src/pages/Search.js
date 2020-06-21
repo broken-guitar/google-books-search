@@ -30,10 +30,10 @@ class Search extends Component {
              // check if search results is empty (undefined)
              if (typeof res.data.items !== "undefined") {
                 let books = res.data.items.map(bookData => this.handleBookData(bookData));
-                this.setState({ searchResults: books, error: "", searchTerm: ""});
+                this.setState({ searchResults: books, error: "ok", searchTerm: ""});
              } else {
                  // result data is "undefined", set results state to empty array
-                 this.setState({ searchResults: [], error: "", searchTerm: ""});
+                 this.setState({ searchResults: [], error: "nodata", searchTerm: ""});
              }
              
           });
@@ -41,24 +41,21 @@ class Search extends Component {
     
     // prepare api data into Book model format 
     handleBookData = bookData => {
-        console.log("authors: ", bookData.volumeInfo.authors);
         let authors     =   Array.isArray(bookData.volumeInfo.authors)
                             ?   bookData.volumeInfo.authors
                             :   ["N/A"];
         let image       =   (typeof bookData.volumeInfo.imageLinks === "undefined")
                             ?   "https://via.placeholder.com/128x206"
                             :   bookData.volumeInfo.imageLinks.thumbnail;
-
-        
-
         let book = {
-            id:             bookData.id,
-            title:          bookData.volumeInfo.title,
-            authors:        authors,
-            description:    bookData.volumeInfo.description,
-            image:          image,
-            link:           bookData.volumeInfo.infoLink    
+                id:             bookData.id,
+                title:          bookData.volumeInfo.title,
+                authors:        authors,
+                description:    bookData.volumeInfo.description,
+                image:          image,
+                link:           bookData.volumeInfo.infoLink    
         };
+        
         return book;
     };
 
@@ -95,6 +92,8 @@ class Search extends Component {
                      
                      <Col sm="12">
                         <BookList
+                            status              = {this.state.error} 
+                            search              = {this.state.searchTerm}
                             books               = {this.state.searchResults}
                             updateSearchResults = {this.updateSearchResults}
                         />

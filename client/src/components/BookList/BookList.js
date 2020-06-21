@@ -43,7 +43,7 @@ function BookList(props) {
       
       <div >
       
-      {props.books.length ? (
+      {props.books.length && props.status == "ok" ? (
          
          <ul className="list-group search-results">
             <FlipMove>
@@ -95,7 +95,7 @@ function BookList(props) {
          </ul>
       )
       :
-         (<h3 className="ml-3 leads"> No Results </h3>
+         (<h3 className="ml-3 leads">{props.search !== "" && props.status == "nodata" ? <i>{props.search}</i> : "No Results"}</h3>
       )}
       </div>
    );

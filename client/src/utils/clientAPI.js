@@ -7,8 +7,8 @@ export const API = {
       const BASEURL = "https://www.googleapis.com/books/v1/volumes?q=";  // google books api search query path
    
       let apiURL = BASEURL + query  // concatenate path and query
-   
-      return axios.get(apiURL)      // send the query to google books api
+    // send the query to google books api
+      return axios.get(apiURL);
   },
 
    // GET all saved books from db
