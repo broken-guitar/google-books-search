@@ -14,7 +14,7 @@ class Search extends Component {
     };
     // this method updates the search bar (otherwise typing in the search bar will appear not to work)
     handleInputChange = event => {
-        this.setState({ search: event.target.value });
+        this.setState({ searchTerm: event.target.value });
     }
 
     // search for book with Google Books API
@@ -27,20 +27,30 @@ class Search extends Component {
              if (res.data.status === "error") {
                 throw new Error(res.data.message);
              }
-             console.log("res.data.items: ", res.data.items);
-             let books = res.data.items.map(bookData => this.handleBookData(bookData));
- 
-             this.setState({ searchResults: books, error: "", search: ""});
-          })
+             // check if search results is empty (undefined)
+             if (typeof res.data.items !== "undefined") {
+                let books = res.data.items.map(bookData => this.handleBookData(bookData));
+                this.setState({ searchResults: books, error: "", searchTerm: ""});
+             } else {
+                 // result data is "undefined", set results state to empty array
+                 this.setState({ searchResults: [], error: "", searchTerm: ""});
+             }
+             
+          });
      }
     
     // prepare api data into Book model format 
     handleBookData = bookData => {
-        let authors     =   bookData.volumeInfo.authors || "N/A";
-        let image       =   bookData.volumeInfo.imageLinks === "undefined"
-                                ? "https://via.placeholder.com/128x206"
-                                : bookData.volumeInfo.imageLinks.thumbnail;
-                
+        console.log("authors: ", bookData.volumeInfo.authors);
+        let authors     =   Array.isArray(bookData.volumeInfo.authors)
+                            ?   bookData.volumeInfo.authors
+                            :   ["N/A"];
+        let image       =   (typeof bookData.volumeInfo.imageLinks === "undefined")
+                            ?   "https://via.placeholder.com/128x206"
+                            :   bookData.volumeInfo.imageLinks.thumbnail;
+
+        
+
         let book = {
             id:             bookData.id,
             title:          bookData.volumeInfo.title,

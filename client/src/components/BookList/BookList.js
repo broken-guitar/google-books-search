@@ -1,8 +1,7 @@
-import React, { Component, useState } from "react";
+import React from "react";
 import "./style.css";
 
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
-import { render } from "react-dom";
 
 import FlipMove from "react-flip-move";
 

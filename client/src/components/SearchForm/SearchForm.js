@@ -16,7 +16,7 @@ function SearchForm(props) {
                     id= "book-search"
                     name="book-input"
                     type="text"
-                    value={props.search}
+                    value={props.searchTerm}
                     placeholder="Search by book title"
                     onChange={props.handleInputChange}
                     size="lg"
