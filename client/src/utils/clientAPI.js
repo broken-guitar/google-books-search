@@ -5,7 +5,6 @@ export const API = {
    // SEARCH google books api
    searchGoogleBooks: (query) => {
       const BASEURL = "https://www.googleapis.com/books/v1/volumes?q=";  // google books api search query path
-      const APIKEY = "AIzaSyDelCyGPERUd7VQLmWqucLtxHxFBmAD-Y8";         // my key
    
       let apiURL = BASEURL + query  // concatenate path and query
    

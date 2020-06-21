@@ -13,7 +13,7 @@ function BooksNavbar() {
 
    return (
       <Navbar expand="sm" bg="secondary" variant="dark">
-         <Navbar.Brand href="#home">Google Books Search</Navbar.Brand>
+         <Navbar.Brand href="/search">Google Books Search</Navbar.Brand>
          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
          <Navbar.Collapse id="responsive-navbar-nav">
             <Nav>

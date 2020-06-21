@@ -7,14 +7,35 @@ import { API } from "../utils/clientAPI";
 
 class Search extends Component {
     state = {
-        search: "",
-        books: [],
+        searchTerm: "",
+        // books: [],
         searchResults: [],
         error: ""
     };
+    // this method updates the search bar (otherwise typing in the search bar will appear not to work)
+    handleInputChange = event => {
+        this.setState({ search: event.target.value });
+    }
 
+    // search for book with Google Books API
+    handleFormSubmit = event => {
+        event.preventDefault(); // prevent the page from refreshing when Search button is clicked
+        
+        // send user's search term to the Google Books API (refer to src/utils/clientAPI.js)
+        API.searchGoogleBooks(this.state.searchTerm)
+          .then(res => {
+             if (res.data.status === "error") {
+                throw new Error(res.data.message);
+             }
+             console.log("res.data.items: ", res.data.items);
+             let books = res.data.items.map(bookData => this.handleBookData(bookData));
+ 
+             this.setState({ searchResults: books, error: "", search: ""});
+          })
+     }
+    
+    // prepare api data into Book model format 
     handleBookData = bookData => {
-        //   make a db book model object
         let authors     =   bookData.volumeInfo.authors || "N/A";
         let image       =   bookData.volumeInfo.imageLinks === "undefined"
                                 ? "https://via.placeholder.com/128x206"
@@ -31,33 +52,16 @@ class Search extends Component {
         return book;
     };
 
-    handleInputChange = event => {
-        this.setState({ search: event.target.value });
-    }
-
-    // search for book with Google Books API
-    handleFormSubmit = event => {
-       event.preventDefault();
-       
-       API.searchGoogleBooks(this.state.search)
-         .then(res => {
-            if (res.data.status === "error") {
-               throw new Error(res.data.message);
-            }
-            console.log("res.data.items: ", res.data.items);
-            let books = res.data.items.map(bookData => this.handleBookData(bookData));
-
-            this.setState({ searchResults: books, error: "", search: ""});
-         })
-    }
-
+    // adds "saved" boolean to books saved by user;
+    // update state to rerender BookList with "Saved" button text when book.saved === true;
     updateSearchResults = (book) => {
-        let newResults = this.state.searchResults;
         
-        newResults.find(o => o.id === book.id).saved = true;
+        let newResults = this.state.searchResults; // clone state bc we don't want to modify directly
+        
+        newResults.find(o => o.id === book.id).saved = true; // find the book and add the saved boolean
         
         this.setState({
-            searchResults: newResults
+            searchResults: newResults // update searchResults with the modified clone array
         });
     }
 
@@ -72,7 +76,7 @@ class Search extends Component {
                      
                      <Col sm="12">                           
                         <SearchForm
-                           search               = {this.state.search}
+                           search               = {this.state.searchTerm}
                            handleInputChange    = {this.handleInputChange}
                            handleFormSubmit     = {this.handleFormSubmit}
                         />
