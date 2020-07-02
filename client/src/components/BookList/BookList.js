@@ -21,7 +21,6 @@ function BookList(props) {
             // save book to database
             API.saveBook(book)
             .then(res => {
-                console.log(res);
                 props.updateSearchResults(book);
             })
             .catch(err => console.log(err));
@@ -43,10 +42,10 @@ function BookList(props) {
       
       <div >
       
-      {props.books.length && props.status == "ok" ? (
+      {props.books.length && props.status == "OK" ? (
          
          <ul className="list-group search-results">
-            <FlipMove>
+            {/* <FlipMove> */}
             {props.books.map(book => ( 
                 <li key={book._id ? book._id : book.id} className="list-group-item">
                     
@@ -91,7 +90,7 @@ function BookList(props) {
                 </li>
 
             ))}
-            </FlipMove>
+            {/* </FlipMove> */}
          </ul>
       )
       :

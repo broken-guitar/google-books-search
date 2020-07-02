@@ -17,7 +17,10 @@ export default class Saved extends Component { // <-- another way of declaring e
 
     loadSavedBooks = () => {
         API.getSavedBooks()
-            .then(res => this.setState({ savedBooks: res.data }))
+            .then(res => {
+                console.log("getSavedBooks: ", res.data);
+                this.setState({ savedBooks: res.data })
+            })
             .catch(err => console.log(err));
     };
 
@@ -32,6 +35,7 @@ export default class Saved extends Component { // <-- another way of declaring e
                 <Col sm="12">
                         <BookList
                             books           = {this.state.savedBooks}
+                            status          = "OK"
                             loadSavedBooks  = {this.loadSavedBooks}
                         />
                 </Col>

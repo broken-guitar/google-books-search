@@ -5,9 +5,13 @@ module.exports = {
   // READ ALL
   findAll: function(req, res) {
     db.Book
-      .find(req.query)
+      .find({})
       .sort({ createdAt: "desc" })
-      .then(dbModel => res.json(dbModel))
+      .then(dbModel => {
+            console.log("find all saved books: ", dbModel);
+            res.json(dbModel)
+       })
+        
       .catch(err => res.status(422).json(err));
   },
 

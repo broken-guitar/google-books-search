@@ -8,7 +8,6 @@ import { API } from "../utils/clientAPI";
 class Search extends Component {
     state = {
         searchTerm: "",
-        // books: [],
         searchResults: [],
         error: ""
     };
@@ -30,7 +29,7 @@ class Search extends Component {
              // check if search results is empty (undefined)
              if (typeof res.data.items !== "undefined") {
                 let books = res.data.items.map(bookData => this.handleBookData(bookData));
-                this.setState({ searchResults: books, error: "ok", searchTerm: ""});
+                this.setState({ searchResults: books, error: "OK", searchTerm: ""});
              } else {
                  // result data is "undefined", set results state to empty array
                  this.setState({ searchResults: [], error: "nodata", searchTerm: ""});
@@ -55,7 +54,7 @@ class Search extends Component {
                 image:          image,
                 link:           bookData.volumeInfo.infoLink    
         };
-        
+
         return book;
     };
 
