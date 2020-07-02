@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 // socket.io stuff
 const server = require("http").createServer(app) // passing app to server
-const io = require("socket.io")(server) // then passing server to socket.io
+// const io = require("socket.io")(server) // then passing server to socket.io
 const mongoose = require("mongoose");
 
 require("dotenv").config();
@@ -31,14 +31,14 @@ app.get("*", function(req, res) {
 // Connect to the Mongo DB
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/googlebooks");
 
-io.on("connection", (socket) => {
-    console.log("Client connected");
-    socket.on("disconnect", () => console.log("Client disconnected"));
-});
+// io.on("connection", (socket) => {
+//     console.log("Client connected");
+//     socket.on("disconnect", () => console.log("Client disconnected"));
+// });
 
 // Start the API server
 server.listen(PORT, function() {
   console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 });
 
-setInterval(() => io.emit('time', new Date().toTimeString()), 3000);
+// setInterval(() => io.emit('time', new Date().toTimeString()), 3000);
